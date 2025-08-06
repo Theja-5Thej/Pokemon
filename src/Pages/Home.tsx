@@ -5,6 +5,8 @@ import type { Pokemon } from '../Types/pokemonTypes';
 import axios from 'axios';
 import { Link } from 'react-router';
 import PokemonNotFound from '../Components/PokemonNotFound';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/pokemon';
 
 const LIMIT = 6;
 
@@ -17,6 +19,8 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearch = useDebounce(searchTerm, 800);
   const observer = useRef<IntersectionObserver | null>(null);
+  const collection = useSelector((state: RootState) => state.collection.collection);
+
 
 
   const fetchPokemon = async (name?: string) => {
@@ -115,7 +119,7 @@ const Home = () => {
                 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 
                 6.86-8.55 11.54L12 21.35z" />
               </svg>
-              My Collection
+              My Collection{collection.length >0 && ' (' + collection.length +')'}
             </button>
           </Link>
         </div>
